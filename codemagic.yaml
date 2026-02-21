@@ -15,4 +15,4 @@ workflows:
           cd frontend
           flutter build apk --debug
     artifacts:
-      - frontend/build/app/outputs/**/*.apk
+      - "**/*.apk"    # 👈 modifié ici
