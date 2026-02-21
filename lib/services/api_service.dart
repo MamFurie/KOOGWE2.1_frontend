@@ -3,23 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiService {
-  // ✅ FIX : URL correcte selon la plateforme
   static String get baseUrl {
     if (kDebugMode) {
-      // ✅ FIX ANDROID : Sur émulateur Android, localhost = l'appareil lui-même
-      // 10.0.2.2 pointe vers le PC hôte (émulateur Android Studio)
       if (defaultTargetPlatform == TargetPlatform.android) {
         return 'http://10.0.2.2:3000';
       }
-      // iOS simulateur et Web : localhost fonctionne directement
       return 'http://localhost:3000';
     }
-    // ✅ Production Railway — remplacer par votre vraie URL
-    const railwayUrl = String.fromEnvironment(
-      'BACKEND_URL',
-      defaultValue: 'https://votre-app.railway.app',
-    );
-    return railwayUrl;
+    // Production Railway
+    return 'https://web-production-13628.up.railway.app';
   }
 
   static final Dio _dio = Dio(BaseOptions(
@@ -44,7 +36,6 @@ class ApiService {
         handler.next(e);
       },
       onRequest: (options, handler) {
-        // Log pour debug
         if (kDebugMode) {
           print('📡 ${options.method} ${options.uri}');
         }
